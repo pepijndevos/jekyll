@@ -68,7 +68,7 @@ while posts.any?
 		content = post.body_html
 
 		# awefull hack, do not use on vlog or podcast
-		post.media[2]['images'].each do |img|
+		post.media['images'].each do |img|
 			path = download_image(img['full']['url'])
 			tag = "<img src=\"/%s\" alt=\"%s\" />" % [path, img['full']['caption']]
 			puts tag
