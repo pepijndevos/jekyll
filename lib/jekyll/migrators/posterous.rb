@@ -24,8 +24,10 @@ posts = site.posts(:page => page)
 
 puts "made it so far"
 
-def download_image(u)
-	path = 'images/%s' % u.split('/')[-1]
+def download_image(u, slug)
+	directory = 'images/%s' % slug
+	FileUtils.mkdir_p directory
+	path = "#{directory}/%s" % u.split('/')[-1]
 	url = URI.parse(u)
 	found = false 
 	until found 
@@ -69,7 +71,7 @@ while posts.any?
 
 		# awefull hack, do not use on vlog or podcast
 		post.media['images'].each do |img|
-			path = download_image(img['full']['url'])
+			path = download_image(img['full']['url'], slug)
 			tag = "<img src=\"/%s\" alt=\"%s\" />" % [path, img['full']['caption']]
 			puts tag
 			begin
